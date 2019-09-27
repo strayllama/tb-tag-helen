@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Helens engagement project</title>
+</head>
+
+<body onload="drawCircles()">
+<div> 
+  <input
+    style="width: 300px"
+    type="range"
+    id="volume"
+    name="volume"
+    step="10">
+  <label for="volume">Volume</label>
+</div>
+
+<h1>Pick a colour:</h1>
+  <div className="shape-container">
+    <div>
+      <button name="red-button" onclick="makeFace('red')"><canvas id="redCircle" width="380" height="380"></canvas></button>
+      <button name="blue-button" onclick="makeFace('blue')"><canvas id="blueCircle" width="380" height="380"></canvas></button>
+    </div>
+    <div>
+      <button name="green-button" onclick="makeFace('green')"><canvas id="greenCircle" width="380" height="380"></canvas></button>
+      <button name="yellow-button"onclick="makeFace('yellow')"><canvas id="yellowCircle" width="380"height="380"></canvas></button>
+    </div>
+  </div>
+<script> 
+  const faceClearDelay = 3000;
+
+  function drawCircles() {
+    var redCircle = document.getElementById('redCircle').getContext('2d');
+    var blueCircle = document.getElementById('blueCircle').getContext('2d');
+    var greenCircle = document.getElementById('greenCircle').getContext('2d');
+    var yellowCircle = document.getElementById('yellowCircle').getContext('2d');
+    redCircle.fillStyle = "red";
+    redCircle.arc(190, 190, 180, 0, Math.PI * 2);
+    redCircle.fill();
+
+    blueCircle.fillStyle = "blue";
+    blueCircle.arc(190, 190, 180, 0, Math.PI * 2);
+    blueCircle.fill();
+
+    greenCircle.fillStyle = "green";
+    greenCircle.arc(190, 190, 180, 0, Math.PI * 2);
+    greenCircle.fill();
+
+    yellowCircle.fillStyle = "yellow";
+    yellowCircle.arc(190, 190, 180, 0, Math.PI * 2);
+    yellowCircle.fill();
+  }
+
+  function makeFace(color) {
+    var setting = document.getElementById('volume').value;
+
+    var theCircle = document.getElementById(`${color}Circle`).getContext('2d');
+    theCircle.beginPath();
+    //arc(x,y,r,sAngle,eAngle,counterclockwise);
+    theCircle.arc(190, 190, 180, 0, Math.PI * 2, true); // Outer circle
+    theCircle.fillStyle = "white";
+    theCircle.fill();
+
+    var randomNumber = Math.floor(Math.random() * Math.floor(100));
+
+    console.log('Setting is at:', setting);
+    console.log('Random Number is:', randomNumber);
+
+    if(randomNumber < setting) { // Happy Circle
+      console.log('Drawing Happy Face');
+      theCircle.moveTo(90, 200);// Mouth (clockwise)
+      theCircle.arc(190, 200, 100, 0, Math.PI, false);
+
+      theCircle.moveTo(140, 135);  // Left eye
+      theCircle.arc(115, 135, 25, 0, Math.PI * 2, false);
+      theCircle.moveTo(140, 135);  // Left eye pupil
+      theCircle.arc(135, 135, 5, 0, Math.PI * 2, false);
+
+      theCircle.moveTo(290, 135); // Right eye
+      theCircle.arc(265, 135, 25, 0, Math.PI * 2, false);
+      theCircle.moveTo(290, 135); // Right eye pupil
+      theCircle.arc(285, 135, 5, 0, Math.PI * 2, false);
+    } else { // SAD circle
+      console.log('Drawing Sad Face');
+      theCircle.moveTo(90, 300);// Mouth (anti-clockwise)
+      theCircle.arc(190, 300, 100, 0, Math.PI, true);
+
+      theCircle.moveTo(140, 135);  // Left eye
+      theCircle.arc(115, 135, 25, 0, Math.PI * 2, false);
+      theCircle.moveTo(130, 140);  // Left eye pupil
+      theCircle.arc(125, 140, 5, 0, Math.PI * 2, false);
+
+      theCircle.moveTo(290, 135); // Right eye
+      theCircle.arc(265, 135, 25, 0, Math.PI * 2, false);
+      theCircle.moveTo(265, 140); // Right eye pupil
+      theCircle.arc(260, 140, 5, 0, Math.PI * 2, false);
+    }
+
+
+    theCircle.fillStyle = "pink";
+    theCircle.fill();
+    theCircle.stroke();
+
+    setTimeout(function () {
+      theCircle.beginPath();
+      theCircle.arc(190, 190, 180, 0, Math.PI * 2, true); // Outer circle
+      theCircle.fillStyle = color;
+      theCircle.fill();
+    }, faceClearDelay);
+  }
+</script>
+</body>
+</html>
+
